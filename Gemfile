@@ -6,6 +6,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bcrypt', '~> 3.1.7'
 gem 'unicorn'
 
+gem 'email_validator'
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
