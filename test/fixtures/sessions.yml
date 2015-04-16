@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  token: aoeu
+  user: one
+
+two:
+  token: asdf
+  user: two

@@ -1,9 +1,9 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-
   setup do
     @user = users(:one)
+    @session = sessions(:one)
   end
 
   def test_valid
@@ -30,4 +30,8 @@ class UserTest < ActiveSupport::TestCase
     assert @user.invalid?
   end
 
+  def test_has_many_sessions
+    assert_not_nil @user.sessions
+    assert_includes @user.sessions, @session
+  end
 end
