@@ -1,8 +1,13 @@
 class API::V1::UsersController < API::V1::APIController
 
   def create
-    user = User.create(user_params)
-    respond_with :api, :v1, user
+    user = User.new(user_params)
+    if user.save
+      token = user.sessions.create.token
+      respond_with :api, :v1, user, meta: {token: token}
+    else
+      respond_with :api, :v1, user
+    end
   end
 
   private
