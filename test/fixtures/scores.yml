@@ -3,11 +3,11 @@
 one:
   title: Chorale 1
   artist: Bach
-  s3key: fixtures/ch.mid
+  s3_key: fixtures/ch.mid
   user: one
 
 two:
   title: Symphony 9
   artist: Beethoven
-  s3key: fixtures/chromatic.mid
+  s3_key: fixtures/chromatic.mid
   user: two

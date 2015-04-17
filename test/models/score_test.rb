@@ -20,8 +20,8 @@ class ScoreTest < ActiveSupport::TestCase
     assert @score.invalid?
   end
 
-  def test_s3key_presence
-    @score.s3key = nil
+  def test_s3_key_presence
+    @score.s3_key = nil
     assert @score.invalid?
   end
 

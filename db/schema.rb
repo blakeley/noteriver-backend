@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150417004133) do
+ActiveRecord::Schema.define(version: 20150417023310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20150417004133) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "s3key"
+    t.string   "s3_key"
   end
 
   add_index "scores", ["user_id"], name: "index_scores_on_user_id", using: :btree

@@ -13,7 +13,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
     refute_empty json["scores"]
     assert_equal @score.artist, json["scores"][0]["artist"]
     assert_equal @score.title, json["scores"][0]["title"]
-    assert_equal @score.s3key, json["scores"][0]["s3key"]
+    assert_equal @score.s3_key, json["scores"][0]["s3_key"]
     assert_equal @score.user.id, json["scores"][0]["user_id"]
     assert_equal Score.count, json["scores"].length
   end
@@ -24,7 +24,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
     assert_equal @score.id, json["score"]["id"]
     assert_equal @score.artist, json["score"]["artist"]
     assert_equal @score.title, json["score"]["title"]
-    assert_equal @score.s3key, json["score"]["s3key"]
+    assert_equal @score.s3_key, json["score"]["s3_key"]
     assert_equal @score.user.id, json["score"]["user_id"]
   end
 
@@ -38,7 +38,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
   test "POST /api/v1/scores with valid fields and credentials" do
     request.env['HTTP_AUTHORIZATION'] = @user.sessions.first.token
     assert_difference ->{@user.scores.count}, 1 do 
-      post :create, score: {title: "Title", artist: "Artist", s3key: "key"}
+      post :create, score: {title: "Title", artist: "Artist", s3_key: "key"}
     end
 
     assert_equal 201, response.status
@@ -47,7 +47,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
   test "POST /api/v1/scores without credentials" do
     request.env['HTTP_AUTHORIZATION'] = nil
     assert_difference ->{@user.scores.count}, 0 do 
-      post :create, score: {title: "Title", artist: "Artist", s3key: "key"}
+      post :create, score: {title: "Title", artist: "Artist", s3_key: "key"}
     end
 
     assert_equal 401, response.status
@@ -56,7 +56,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
   test "POST /api/v1/scores without a title" do
     request.env['HTTP_AUTHORIZATION'] = @user.sessions.first.token
     assert_difference ->{@user.scores.count}, 0 do 
-      post :create, score: {artist: "Artist", s3key: "key"}
+      post :create, score: {artist: "Artist", s3_key: "key"}
     end
 
     assert_equal 422, response.status
@@ -67,21 +67,21 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
   test "POST /api/v1/scores without an artist" do
     request.env['HTTP_AUTHORIZATION'] = @user.sessions.first.token
     assert_difference ->{@user.scores.count}, 0 do 
-      post :create, score: {title: "Title", s3key: "key"}
+      post :create, score: {title: "Title", s3_key: "key"}
     end
 
     assert_equal 422, response.status
     assert_equal "can't be blank", json["errors"]["artist"][0]
   end
 
-  test "POST /api/v1/scores without an s3key" do
+  test "POST /api/v1/scores without an s3_key" do
     request.env['HTTP_AUTHORIZATION'] = @user.sessions.first.token
     assert_difference ->{@user.scores.count}, 0 do 
       post :create, score: {title: "Title", artist: "Artist"}
     end
 
     assert_equal 422, response.status
-    assert_equal "can't be blank", json["errors"]["s3key"][0]
+    assert_equal "can't be blank", json["errors"]["s3_key"][0]
   end
 
 end

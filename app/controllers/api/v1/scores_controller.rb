@@ -20,7 +20,7 @@ class API::V1::ScoresController < API::V1::APIController
   end
 
   def score_params
-    params.require(:score).permit(:title, :artist, :s3key)
+    params.require(:score).permit(:title, :artist, :s3_key)
   end
 
 
