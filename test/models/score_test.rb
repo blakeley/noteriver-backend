@@ -20,10 +20,14 @@ class ScoreTest < ActiveSupport::TestCase
     assert @score.invalid?
   end
 
+  def test_s3key_presence
+    @score.s3key = nil
+    assert @score.invalid?
+  end
+
   def test_belongs_to_user
     assert_not_nil @score.user
     assert_equal @score.user, @user
   end
-
 
 end

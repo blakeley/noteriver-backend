@@ -12,6 +12,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
     refute_empty json["scores"]
     assert_equal @score.artist, json["scores"][0]["artist"]
     assert_equal @score.title, json["scores"][0]["title"]
+    assert_equal @score.s3key, json["scores"][0]["s3key"]
     assert_equal @score.user.id, json["scores"][0]["user_id"]
     assert_equal Score.count, json["scores"].length
   end
@@ -22,6 +23,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
     assert_equal @score.id, json["score"]["id"]
     assert_equal @score.artist, json["score"]["artist"]
     assert_equal @score.title, json["score"]["title"]
+    assert_equal @score.s3key, json["score"]["s3key"]
     assert_equal @score.user.id, json["score"]["user_id"]
   end
 
