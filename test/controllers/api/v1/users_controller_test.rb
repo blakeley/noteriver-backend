@@ -13,6 +13,14 @@ class API::V1::UsersControllerTest < ActionController::TestCase
     assert_equal @user.id, json["users"][0]["id"]
   end
 
+  # GET /api/v1/users/:id
+
+  test "GET /api/v1/users/:id" do
+    get :show, id: @user.id
+    assert_equal 200, response.status
+    assert_equal @user.id, json["user"]["id"]
+  end
+
   # POST /api/v1/users
 
   test "POST /api/v1/users with valid registration" do
