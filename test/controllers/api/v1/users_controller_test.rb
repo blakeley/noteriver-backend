@@ -5,6 +5,14 @@ class API::V1::UsersControllerTest < ActionController::TestCase
     @user = users(:one)
   end
 
+  # GET /api/v1/users
+
+  test "GET /api/v1/users" do
+    get :index
+    assert_equal 200, response.status
+    assert_equal @user.id, json["users"][0]["id"]
+  end
+
   # POST /api/v1/users
 
   test "POST /api/v1/users with valid registration" do
