@@ -3,6 +3,7 @@ require 'test_helper'
 class API::V1::ScoresControllerTest < ActionController::TestCase
 
   setup do
+    @user = users(:one)
     @score = scores(:one)
   end
 
@@ -30,6 +31,57 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
   test "GET /api/v1/scores/:id with unknown id" do
     get :show, id: -1
     assert_equal 404, response.status
+  end
+
+  # POST /api/v1/scores
+
+  test "POST /api/v1/scores with valid fields and credentials" do
+    request.env['HTTP_AUTHORIZATION'] = @user.sessions.first.token
+    assert_difference ->{@user.scores.count}, 1 do 
+      post :create, score: {title: "Title", artist: "Artist", s3key: "key"}
+    end
+
+    assert_equal 201, response.status
+  end
+
+  test "POST /api/v1/scores without credentials" do
+    request.env['HTTP_AUTHORIZATION'] = nil
+    assert_difference ->{@user.scores.count}, 0 do 
+      post :create, score: {title: "Title", artist: "Artist", s3key: "key"}
+    end
+
+    assert_equal 401, response.status
+  end
+
+  test "POST /api/v1/scores without a title" do
+    request.env['HTTP_AUTHORIZATION'] = @user.sessions.first.token
+    assert_difference ->{@user.scores.count}, 0 do 
+      post :create, score: {artist: "Artist", s3key: "key"}
+    end
+
+    assert_equal 422, response.status
+    assert_not_nil json["errors"]
+    assert_equal "can't be blank", json["errors"]["title"][0]
+  end
+
+  test "POST /api/v1/scores without an artist" do
+    request.env['HTTP_AUTHORIZATION'] = @user.sessions.first.token
+    assert_difference ->{@user.scores.count}, 0 do 
+      post :create, score: {title: "Title", s3key: "key"}
+    end
+
+    assert_equal 422, response.status
+    assert_equal "can't be blank", json["errors"]["artist"][0]
+  end
+
+  test "POST /api/v1/scores without an s3key" do
+    request.env['HTTP_AUTHORIZATION'] = @user.sessions.first.token
+    assert_difference ->{@user.scores.count}, 0 do 
+      post :create, score: {title: "Title", artist: "Artist"}
+    end
+
+    assert_equal 422, response.status
+    assert_equal "can't be blank", json["errors"]["s3key"][0]
   end
 
 end
