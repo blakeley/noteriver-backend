@@ -24,4 +24,8 @@ class API::V1::APIController < ApplicationController
     render status: :not_found, nothing: true
   end
 
+  def render_400
+    render status: :bad_request, nothing: true
+  end
+
 end

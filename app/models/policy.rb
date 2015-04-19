@@ -63,6 +63,7 @@ class Policy
     expiration_time < Time.now + 1.hour &&
     acl == "public-read" &&
     content_type == "audio/midi" &&
+    content_length_minimum > 0 &&
     content_length_minimum == content_length_maximum &&
     content_length_maximum < 5.megabytes
   end
