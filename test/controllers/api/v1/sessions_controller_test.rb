@@ -17,6 +17,16 @@ class API::V1::SessionsControllerTest < ActionController::TestCase
     assert_equal @user.sessions.last.token, json["meta"]["token"]
   end
 
+  test "POST /api/v1/sessions with uppercase email" do
+    assert_difference ->{Session.count}, 1 do
+      post :create, {email: @user.email.upcase, password: "password"}
+    end
+
+    assert_equal 201, response.status
+    assert_equal @user.id, json["user"]["id"]
+    assert_equal @user.sessions.last.token, json["meta"]["token"]
+  end
+
   test "POST /api/v1/sessions with an incorrect password" do
     assert_difference ->{Session.count}, 0 do
       post :create, {email: @user.email, password: "wrong"}

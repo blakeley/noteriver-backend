@@ -26,6 +26,11 @@ class UserTest < ActiveSupport::TestCase
     assert new_user.invalid?
   end
 
+  def test_email_uniqueness_case_insensitive
+    new_user = User.new(email: @user.email.upcase, password: 'password')
+    assert new_user.invalid?
+  end
+
   def test_password_presence
     @user.password = nil
     assert @user.invalid?

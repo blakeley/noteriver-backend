@@ -1,7 +1,7 @@
 class API::V1::SessionsController < API::V1::APIController
 
   def create
-    user = User.where(email: params[:email]).first
+    user = User.where("lower(email) = ?", params[:email].downcase).first
     if user && user.authenticate(params[:password])
       render status: :created, json: user, meta: {token: user.sessions.create.token}
     elsif user

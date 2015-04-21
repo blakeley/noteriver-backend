@@ -44,7 +44,7 @@ class API::V1::UsersControllerTest < ActionController::TestCase
 
   test "POST /api/v1/users with existing email" do
     assert_difference ->{User.count}, 0 do
-      post :create, user: {email: 'one@mail.com', password: 'password'}
+      post :create, user: {email: @user.email, password: 'password'}
     end
 
     assert_equal 422, response.status
