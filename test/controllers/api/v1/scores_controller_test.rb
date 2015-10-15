@@ -15,6 +15,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
     assert_equal @score.title, json["scores"][0]["title"]
     assert_equal @score.s3_key, json["scores"][0]["s3_key"]
     assert_equal @score.user.id, json["scores"][0]["user_id"]
+    assert_equal @score.created_at, json["scores"][0]["created_at"]
     assert_equal Score.count, json["scores"].length
   end
 
@@ -26,6 +27,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
     assert_equal @score.title, json["score"]["title"]
     assert_equal @score.s3_key, json["score"]["s3_key"]
     assert_equal @score.user.id, json["score"]["user_id"]
+    assert_equal @score.created_at, json["score"]["created_at"]
   end
 
   test "GET /api/v1/scores/:id with unknown id" do
