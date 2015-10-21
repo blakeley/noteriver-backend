@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby "2.2.2"
 
 gem 'rails', '4.2.1'
 gem 'pg'
@@ -23,3 +24,4 @@ group :development do
   gem 'guard-minitest'
 end
 
+gem 'rails_12factor', group: :production
