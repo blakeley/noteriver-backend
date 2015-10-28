@@ -7,4 +7,6 @@ Rails.application.routes.draw do
       resources :signatures, only: [:show]
     end
   end
+
+  get '(*route)', to: 'pages#index'
 end
