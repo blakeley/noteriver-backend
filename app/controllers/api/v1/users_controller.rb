@@ -13,7 +13,7 @@ class API::V1::UsersController < API::V1::APIController
     if user.save
       token = user.sessions.create.token
       respond_with :api, :v1, user, meta: {token: token}
-    else
+    else # Not JSON API compliant until v1.0 of active_model_serializers
       respond_with :api, :v1, user
     end
   end
@@ -25,7 +25,6 @@ class API::V1::UsersController < API::V1::APIController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password)
+    params.require(:data).require(:attributes).permit(:email, :password)
   end
-
 end

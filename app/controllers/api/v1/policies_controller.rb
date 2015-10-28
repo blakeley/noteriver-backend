@@ -1,13 +1,13 @@
-class API::V1::SignaturesController < API::V1::APIController
+class API::V1::PoliciesController < API::V1::APIController
   before_action :authenticate_user!
   before_action :authorize_user!
   rescue_from Exception, with: :render_400
 
   def show
     if policy.valid?
-      render status: :ok, plain: @policy.signature
+      respond_with policy
     else
-      render status: :forbidden, json: {message: "Invalid policy."}
+      render status: :forbidden, json: {errors: [{title: "Invalid policy"}]}
     end
   end
 
@@ -19,9 +19,7 @@ class API::V1::SignaturesController < API::V1::APIController
 
   def authorize_user!
     if policy.user_id != current_user.id
-      render status: :forbidden, json: {message: "You are not authorized to access this resource."}
+      render status: :forbidden, json: {errors: [{title: "You are not authorized to access this resource"}]}
     end
   end
-
-
 end

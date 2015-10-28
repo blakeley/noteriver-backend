@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :show, :index]
       resources :sessions, only: [:create]
       resources :scores, only: [:create, :show, :index]
-      resources :signatures, only: [:show]
+      resources :policies, only: [:show]
     end
   end
 

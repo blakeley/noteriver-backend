@@ -7,57 +7,83 @@ class API::V1::UsersControllerTest < ActionController::TestCase
 
   # GET /api/v1/users
 
-  test "GET /api/v1/users" do
+  test 'GET /api/v1/users' do
     get :index
     assert_equal 200, response.status
-    assert_equal @user.id, json["users"][0]["id"]
+    assert_equal @user.id, json['data'][0]['id'].to_i
+    assert_equal @user.scores.last.id, json['data'][0]['relationships']['scores']['data'][0]['id'].to_i
   end
 
   # GET /api/v1/users/:id
 
-  test "GET /api/v1/users/:id" do
+  test 'GET /api/v1/users/:id' do
     get :show, id: @user.id
     assert_equal 200, response.status
-    assert_equal @user.id, json["user"]["id"]
+    assert_equal @user.id, json['data']['id'].to_i
+    assert_equal @user.scores.last.id, json['data']['relationships']['scores']['data'][0]['id'].to_i
   end
 
   # POST /api/v1/users
 
-  test "POST /api/v1/users with valid registration" do
+  test 'POST /api/v1/users with valid registration' do
     assert_difference ->{User.count}, 1 do
-      post :create, user: {email: 'new@mail.com', password: 'password'}
+      post :create, data: {
+        type: 'users',
+        attributes: {
+          email: 'new@mail.com',
+          password: 'password'
+        }
+      }
     end
 
     assert_equal 201, response.status
-    assert_equal User.last.id, json["user"]["id"]
-    assert_equal User.last.sessions.last.token, json["meta"]["token"]
+    assert_equal User.last.id, json['data']['id'].to_i
+    assert_equal User.last.sessions.last.token, json['meta']['token']
   end
 
-  test "POST /api/v1/users with invalid email" do
+  test 'POST /api/v1/users with invalid email' do
     assert_difference ->{User.count}, 0 do
-      post :create, user: {email: 'invalid', password: 'password'}
+      post :create, data: {
+        type: 'users',
+        attributes: {
+          email: 'invalid',
+          password: 'password'
+        }
+      }
     end
 
     assert_equal 422, response.status
-    assert_equal "is invalid", json["errors"]["email"][0]
+    # assert_equal 'Not a valid email address', json['errors'][0]['title']
   end
 
-  test "POST /api/v1/users with existing email" do
+  test 'POST /api/v1/users with existing email' do
     assert_difference ->{User.count}, 0 do
-      post :create, user: {email: @user.email, password: 'password'}
+      post :create, data: {
+        type: 'users',
+        attributes: {
+          email: @user.email,
+          password: 'password'
+        }
+      }
     end
 
     assert_equal 422, response.status
-    assert_equal "has already been taken", json["errors"]["email"][0]
+    # assert_equal 'This email has already been registered', json['errors'][0]['title']
   end
 
-  test "POST /api/v1/users without password" do
+  test 'POST /api/v1/users without password' do
     assert_difference ->{User.count}, 0 do
-      post :create, user: {email: 'new@mail.com', password: ''}
+      post :create, data: {
+        type: 'users',
+        attributes: {
+          email: 'new@mail.com',
+          password: ''
+        }
+      }
     end
 
     assert_equal 422, response.status
-    assert_equal "can't be blank", json["errors"]["password"][0]
+    # assert_equal 'can't be blank', json['errors'][0]['title']
   end
 
 

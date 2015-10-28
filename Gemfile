@@ -10,7 +10,7 @@ gem 'unicorn'
 
 gem 'email_validator'
 
-gem 'active_model_serializers', '~>0.8.0'
+gem 'active_model_serializers', :git => 'https://github.com/rails-api/active_model_serializers.git', :tag => 'v0.10.0.rc3'
 
 gem 'responders'
 

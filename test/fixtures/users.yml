@@ -7,3 +7,7 @@ one:
 two:
   email: Two@mail.com
   password_digest: $2a$10$x2P64GjU8Sg2UE7eGo/dXeLYo3zehqnelx49SGpQYALqlPH7J813K
+
+three:
+  email: three@mail.com
+  password_digest: $2a$10$x2P64GjU8Sg2UE7eGo/dXeLYo3zehqnelx49SGpQYALqlPH7J813K

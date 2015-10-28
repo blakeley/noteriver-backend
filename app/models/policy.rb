@@ -3,6 +3,9 @@ require 'openssl'
 require 'digest/sha1'
 
 class Policy
+  include ActiveModel::Model
+  include ActiveModel::Serialization
+
   attr_accessor :expiration_time, :bucket, :key, :acl, :content_type, :content_length_minimum, :content_length_maximum
 
   def self.find(id)
@@ -57,6 +60,10 @@ class Policy
 
   def user_id
     key.split('/')[1].to_i
+  end
+
+  def user
+    User.find(user_id)
   end
 
   def valid?

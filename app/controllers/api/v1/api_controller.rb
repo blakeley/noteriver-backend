@@ -16,7 +16,7 @@ class API::V1::APIController < ApplicationController
 
   def authenticate_user!
     if request.headers[:HTTP_AUTHORIZATION].nil? || current_user.nil?
-      render status: :unauthorized, json: {message: "Invalid authentication token"}
+      render status: :unauthorized, json: {errors: [{title: "Invalid authentication token"}]}
     end
   end
 
