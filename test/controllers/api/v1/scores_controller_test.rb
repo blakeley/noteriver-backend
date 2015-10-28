@@ -13,8 +13,8 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
     refute_empty json["data"]
     assert_equal @score.artist, json["data"][0]["attributes"]["artist"]
     assert_equal @score.title, json["data"][0]["attributes"]["title"]
-    assert_equal @score.s3_key, json["data"][0]["attributes"]["s3_key"]
-    assert_equal @score.created_at, json["data"][0]["attributes"]["created_at"]
+    assert_equal @score.s3_key, json["data"][0]["attributes"]["s3-key"]
+    assert_equal @score.created_at, json["data"][0]["attributes"]["created-at"]
     assert_equal @score.user.id, json["data"][0]["relationships"]["user"]["data"]["id"].to_i
     assert_equal Score.count, json["data"].length
   end
@@ -25,8 +25,8 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
     assert_equal @score.id, json["data"]["id"].to_i
     assert_equal @score.artist, json["data"]["attributes"]["artist"]
     assert_equal @score.title, json["data"]["attributes"]["title"]
-    assert_equal @score.s3_key, json["data"]["attributes"]["s3_key"]
-    assert_equal @score.created_at, json["data"]["attributes"]["created_at"]
+    assert_equal @score.s3_key, json["data"]["attributes"]["s3-key"]
+    assert_equal @score.created_at, json["data"]["attributes"]["created-at"]
     assert_equal @score.user.id, json["data"]["relationships"]["user"]["data"]["id"].to_i
   end
 
@@ -115,7 +115,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
     end
 
     assert_equal 422, response.status
-    # assert_equal "can't be blank", json["errors"][0]["s3_key"]
+    # assert_equal "can't be blank", json["errors"][0]["s3-key"]
   end
 
 end
