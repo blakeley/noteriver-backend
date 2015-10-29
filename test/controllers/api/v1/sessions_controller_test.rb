@@ -20,7 +20,7 @@ class API::V1::SessionsControllerTest < ActionController::TestCase
 
     assert_equal 201, response.status
     assert_equal @user.id, json["data"]["id"].to_i
-    assert_equal @user.class.name.downcase.pluralize, json["data"]["type"]
+    assert_equal @user.class.name.downcase, json["data"]["type"]
     assert_equal @user.sessions.last.token, json["meta"]["token"]
   end
 
@@ -37,7 +37,7 @@ class API::V1::SessionsControllerTest < ActionController::TestCase
 
     assert_equal 201, response.status
     assert_equal @user.id, json["data"]["id"].to_i
-    assert_equal @user.class.name.downcase.pluralize, json["data"]["type"]
+    assert_equal @user.class.name.downcase, json["data"]["type"]
     assert_equal @user.sessions.last.token, json["meta"]["token"]
   end
 
