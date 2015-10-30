@@ -53,7 +53,7 @@ class API::V1::UsersControllerTest < ActionController::TestCase
     end
 
     assert_equal 422, response.status
-    # assert_equal 'Not a valid email address', json['errors'][0]['title']
+    assert_equal 'Invalid email', json['errors'][0]['title']
   end
 
   test 'POST /api/v1/users with existing email' do
@@ -68,7 +68,7 @@ class API::V1::UsersControllerTest < ActionController::TestCase
     end
 
     assert_equal 422, response.status
-    # assert_equal 'This email has already been registered', json['errors'][0]['title']
+    assert_equal 'Email already registered', json['errors'][0]['title']
   end
 
   test 'POST /api/v1/users without password' do
@@ -83,7 +83,7 @@ class API::V1::UsersControllerTest < ActionController::TestCase
     end
 
     assert_equal 422, response.status
-    # assert_equal 'can't be blank', json['errors'][0]['title']
+    assert_equal 'Invalid password', json['errors'][0]['title']
   end
 
 

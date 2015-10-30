@@ -8,7 +8,7 @@ class API::V1::SessionsController < API::V1::APIController
     elsif user
       render status: :unauthorized, json: {errors: [{title: "Incorrect password"}]}
     else
-      render status: :unauthorized, json: {errors: [{title: "Unknown email address"}]}
+      render status: :unauthorized, json: {errors: [{title: "Unknown email"}]}
     end
   end
 

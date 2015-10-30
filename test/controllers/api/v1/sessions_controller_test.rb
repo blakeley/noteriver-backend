@@ -68,7 +68,7 @@ class API::V1::SessionsControllerTest < ActionController::TestCase
     end
 
     assert_equal 401, response.status
-    assert_equal "Unknown email address", json["errors"][0]["title"]
+    assert_equal "Unknown email", json["errors"][0]["title"]
   end
 
 end
