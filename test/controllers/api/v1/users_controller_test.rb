@@ -38,7 +38,7 @@ class API::V1::UsersControllerTest < ActionController::TestCase
 
     assert_equal 201, response.status
     assert_equal User.last.id, json['data']['id'].to_i
-    assert_equal User.last.sessions.last.token, json['meta']['token']
+    assert_equal User.last.sessions.last.token, json['meta']['authToken']
   end
 
   test 'POST /api/v1/users with invalid email' do
