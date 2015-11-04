@@ -22,18 +22,34 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_email_uniqueness
-    new_user = User.new(email: @user.email, password: 'password')
+    new_user = User.new(email: @user.email, password: 'password', username: 'username')
     assert new_user.invalid?
   end
 
   def test_email_uniqueness_case_insensitive
-    new_user = User.new(email: @user.email.upcase, password: 'password')
+    new_user = User.new(email: @user.email.upcase, password: 'password', username: 'username')
     assert new_user.invalid?
   end
 
   def test_password_presence
     @user.password = nil
     assert @user.invalid?
+  end
+
+  def test_username_generate_default
+    @user.username = nil
+    @user.validate
+    refute @user.username.nil?
+  end
+
+  def test_username_uniqueness
+    new_user = User.new(email: 'user@mail.com', password: 'password', username: @user.username)
+    assert new_user.invalid?
+  end
+
+  def test_username_uniqueness_case_insensitive
+    new_user = User.new(email: 'user@mail.com', password: 'password', username: @user.username.upcase)
+    assert new_user.invalid?
   end
 
   def test_has_many_sessions

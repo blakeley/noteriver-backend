@@ -29,5 +29,4 @@ class ScoreTest < ActiveSupport::TestCase
     assert_not_nil @score.user
     assert_equal @score.user, @user
   end
-
 end

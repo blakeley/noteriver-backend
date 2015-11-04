@@ -1,5 +1,5 @@
 class UserSerializer < BaseSerializer
-  attributes :id
+  attributes :username
 
   has_many :scores
 end

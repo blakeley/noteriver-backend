@@ -31,7 +31,8 @@ class API::V1::UsersControllerTest < ActionController::TestCase
         type: 'users',
         attributes: {
           email: 'new@mail.com',
-          password: 'password'
+          password: 'password',
+          username: 'new-user',
         }
       }
     end
@@ -47,7 +48,8 @@ class API::V1::UsersControllerTest < ActionController::TestCase
         type: 'users',
         attributes: {
           email: 'invalid',
-          password: 'password'
+          password: 'password',
+          username: 'new-user',
         }
       }
     end
@@ -62,7 +64,8 @@ class API::V1::UsersControllerTest < ActionController::TestCase
         type: 'users',
         attributes: {
           email: @user.email,
-          password: 'password'
+          password: 'password',
+          username: 'new-user',
         }
       }
     end
@@ -77,7 +80,8 @@ class API::V1::UsersControllerTest < ActionController::TestCase
         type: 'users',
         attributes: {
           email: 'new@mail.com',
-          password: ''
+          password: '',
+          username: 'new-user',
         }
       }
     end
@@ -86,5 +90,18 @@ class API::V1::UsersControllerTest < ActionController::TestCase
     assert_equal 'Invalid password', json['errors'][0]['title']
   end
 
+  test 'POST /api/v1/users without username' do
+    assert_difference ->{User.count}, 1 do
+      post :create, data: {
+        type: 'users',
+        attributes: {
+          email: 'new@mail.com',
+          password: 'password',
+        }
+      }
+    end
 
+    assert_equal 201, response.status
+    assert_not_nil json['data']['attributes']['username']
+  end
 end

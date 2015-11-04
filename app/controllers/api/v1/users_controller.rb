@@ -19,6 +19,10 @@ class API::V1::UsersController < API::V1::APIController
       render status: :unprocessable_entity, json: {errors: [{title: "Invalid email"}]}
     elsif user.errors[:email].first == "has already been taken"
       render status: :unprocessable_entity, json: {errors: [{title: "Email already registered"}]}
+    elsif user.errors[:username].first == "can't be blank"
+      render status: :unprocessable_entity, json: {errors: [{title: "Invalid username"}]}
+    elsif user.errors[:username].first == "has already been taken"
+      render status: :unprocessable_entity, json: {errors: [{title: "Username already claimed"}]}
     else
       render status: :unprocessable_entity, json: {errors: [{title: "Bad request"}]}
     end
@@ -31,6 +35,6 @@ class API::V1::UsersController < API::V1::APIController
   end
 
   def user_params
-    params.require(:data).require(:attributes).permit(:email, :password)
+    params.require(:data).require(:attributes).permit(:email, :password, :username)
   end
 end
