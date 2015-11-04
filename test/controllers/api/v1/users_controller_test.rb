@@ -21,6 +21,7 @@ class API::V1::UsersControllerTest < ActionController::TestCase
     assert_equal 200, response.status
     assert_equal @user.id, json['data']['id'].to_i
     assert_equal @user.scores.last.id, json['data']['relationships']['scores']['data'][0]['id'].to_i
+    assert_equal @user.username, json['data']['attributes']['username']
   end
 
   # POST /api/v1/users
@@ -104,4 +105,23 @@ class API::V1::UsersControllerTest < ActionController::TestCase
     assert_equal 201, response.status
     assert_not_nil json['data']['attributes']['username']
   end
+
+  # PATCH /api/v1/users
+
+  test 'PATCH /api/v1/users/:id with username' do
+    patch :update, id: @user.id, data: {
+      type: 'users',
+      id: @user.id,
+      attributes: {
+        username: 'updated-username'
+      }
+    }
+
+    @user.reload
+
+    assert_equal 204, response.status
+    assert_equal 'updated-username', @user.username
+  end
+
+
 end

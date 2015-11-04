@@ -28,6 +28,11 @@ class API::V1::UsersController < API::V1::APIController
     end
   end
 
+  def update
+    user.update_attributes(user_params)
+    respond_with :api, :v1, user
+  end
+
   private
 
   def user
