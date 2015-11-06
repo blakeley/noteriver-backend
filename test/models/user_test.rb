@@ -52,6 +52,10 @@ class UserTest < ActiveSupport::TestCase
     assert new_user.invalid?
   end
 
+  def test_email_md5
+    assert_equal 'd01cd8c67ccf8b895ec6bbbd2e542c8d', @user.email_md5
+  end
+
   def test_has_many_sessions
     assert_not_nil @user.sessions
     assert_includes @user.sessions, @session

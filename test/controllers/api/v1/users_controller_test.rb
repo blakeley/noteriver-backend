@@ -22,6 +22,7 @@ class API::V1::UsersControllerTest < ActionController::TestCase
     assert_equal @user.id, json['data']['id'].to_i
     assert_equal @user.scores.last.id, json['data']['relationships']['scores']['data'][0]['id'].to_i
     assert_equal @user.username, json['data']['attributes']['username']
+    assert_equal @user.email_md5, json['data']['attributes']['email-md5']
   end
 
   # POST /api/v1/users
@@ -41,6 +42,7 @@ class API::V1::UsersControllerTest < ActionController::TestCase
     assert_equal 201, response.status
     assert_equal User.last.id, json['data']['id'].to_i
     assert_equal User.last.sessions.last.token, json['meta']['authToken']
+    assert_equal User.last.email_md5, json['data']['attributes']['email-md5']
   end
 
   test 'POST /api/v1/users with invalid email' do

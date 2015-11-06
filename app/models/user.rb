@@ -16,4 +16,8 @@ class User < ActiveRecord::Base
       end while self.class.exists?(username: username)
     end
   end
+
+  def email_md5
+    Digest::MD5.hexdigest email
+  end
 end
