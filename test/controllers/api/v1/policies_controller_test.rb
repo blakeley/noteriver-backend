@@ -5,7 +5,7 @@ class API::V1::PoliciesControllerTest < ActionController::TestCase
   setup do
     @user = users(:one)
     @policy = Policy.new(
-      "expiration_time" => Time.now.utc + 1.hour,
+      "expiration" => (Time.now.utc + 1.hour).iso8601,
       "bucket" => "noteriver-dev",
       "key" => "uploads/#{@user.id}/s3-test-file.mid",
       "acl" => "public-read",

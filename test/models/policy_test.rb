@@ -6,7 +6,7 @@ class PolicyTest < ActiveSupport::TestCase
 
   setup do
     @policy = Policy.new(
-      "expiration_time" => Time.now.utc + 1.hour,
+      "expiration" => (Time.now.utc + 1.hour).iso8601,
       "bucket" => "noteriver-dev",
       "key" => "uploads/7357/s3-test-file.mid",
       "acl" => "public-read",
@@ -52,9 +52,9 @@ class PolicyTest < ActiveSupport::TestCase
   end
 
   def test_constructor_sets_expiration
-    expiration_time = Time.now.utc + 1.hour
-    policy = Policy.new(expiration_time: expiration_time)
-    assert_equal expiration_time, policy.expiration_time
+    expiration = (Time.now.utc + 1.hour).iso8601
+    policy = Policy.new(expiration: expiration)
+    assert_equal expiration, policy.expiration
   end
 
   def test_document_structure
@@ -73,9 +73,9 @@ class PolicyTest < ActiveSupport::TestCase
   end
 
   def test_id_is_stable
-    new_policy = Policy.new(id: @policy.id)
-    assert_equal @policy.id, new_policy.id
-    refute @policy.id.include? "\n"
+    id = 'eyJleHBpcmF0aW9uIjoiMjAxNS0xMS0xMFQwMDo0NTo0MS40OTdaIiwiY29uZGl0aW9ucyI6W3siYnVja2V0Ijoibm90ZXJpdmVyIn0seyJrZXkiOiJ1cGxvYWRzLzEvYWxiX3NlMy5taWQifSx7ImFjbCI6InB1YmxpYy1yZWFkIn0seyJDb250ZW50LVR5cGUiOiJhdWRpby9taWRpIn0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMjg5MTUsMjg5MTVdXX0='
+    policy = Policy.find(id)
+    assert_equal id, policy.id
   end
 
   def test_user_id
@@ -89,7 +89,7 @@ class PolicyTest < ActiveSupport::TestCase
   end
 
   def test_invalid_expiration
-    @policy.expiration_time = Time.now.utc + 61.minutes
+    @policy.expiration = (Time.now.utc + 61.minutes).iso8601
     refute @policy.valid?
   end
 

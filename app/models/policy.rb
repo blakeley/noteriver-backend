@@ -6,16 +6,10 @@ class Policy
   include ActiveModel::Model
   include ActiveModel::Serialization
 
-  attr_accessor :expiration_time, :bucket, :key, :acl, :content_type, :content_length_minimum, :content_length_maximum
+  attr_accessor :expiration, :bucket, :key, :acl, :content_type, :content_length_minimum, :content_length_maximum
 
   def self.find(id)
     Policy.new(id: id)
-  end
-
-  def initialize(opts = {})
-    opts.each do |key, value|
-      self.send("#{key}=", value)
-    end
   end
 
   def id=(id)
@@ -27,7 +21,7 @@ class Policy
   end
 
   def document=(document)
-    self.expiration_time = Time.parse(document["expiration"])
+    self.expiration = document["expiration"]
     self.bucket = document["conditions"][0]["bucket"]
     self.key = document["conditions"][1]["key"]
     self.acl = document["conditions"][2]["acl"]
@@ -54,10 +48,6 @@ class Policy
     self.content_length_maximum = content_length
   end
 
-  def expiration
-    expiration_time.to_time.iso8601
-  end
-
   def user_id
     key.split('/')[1].to_i
   end
@@ -67,7 +57,7 @@ class Policy
   end
 
   def valid?
-    expiration_time < Time.now + 1.hour &&
+    Time.parse(expiration) < Time.now + 2.hour &&
     acl == "public-read" &&
     content_type == "audio/midi" &&
     content_length_minimum > 0 &&
