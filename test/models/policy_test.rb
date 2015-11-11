@@ -89,7 +89,7 @@ class PolicyTest < ActiveSupport::TestCase
   end
 
   def test_invalid_expiration
-    @policy.expiration = (Time.now.utc + 61.minutes).iso8601
+    @policy.expiration = (Time.now.utc + 121.minutes).iso8601
     refute @policy.valid?
   end
 

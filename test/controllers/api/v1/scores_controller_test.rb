@@ -45,7 +45,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
         attributes: {
           title: 'Title',
           artist: 'Artist',
-          s3_key: 'key'
+          's3-key': 'key'
         }
       }
     end
@@ -61,7 +61,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
         attributes: {
           title: 'Title',
           artist: 'Artist',
-          s3_key: 'key'
+          's3-key': 'key'
         }
       }
     end
@@ -76,7 +76,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
         type: 'scores',
         attributes: {
           artist: 'Artist',
-          s3_key: 'key'
+          's3-key': 'key'
         }
       }
     end
@@ -93,7 +93,7 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
         type: 'scores',
         attributes: {
           title: 'Title',
-          s3_key: 'key'
+          's3-key': 'key'
         }
       }
     end

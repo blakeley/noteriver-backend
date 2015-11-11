@@ -20,6 +20,6 @@ class API::V1::ScoresController < API::V1::APIController
   end
 
   def score_params
-    params.require(:data).require(:attributes).permit(:title, :artist, :s3_key)
+    params.require(:data).require(:attributes).permit(:title, :artist, 's3-key').transform_keys{|key| key.underscore}
   end
 end
