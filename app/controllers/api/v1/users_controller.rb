@@ -1,4 +1,6 @@
 class API::V1::UsersController < API::V1::APIController
+  before_action :authenticate_user!, only: [:update]
+  before_action :authorize_user!, only: [:update]
 
   def index
     respond_with User.all
@@ -41,5 +43,11 @@ class API::V1::UsersController < API::V1::APIController
 
   def user_params
     params.require(:data).require(:attributes).permit(:email, :password, :username)
+  end
+
+  def authorize_user!
+    if user != current_user
+      render status: :forbidden, json: {errors: [{title: "You are not authorized to access this resource."}]}
+    end
   end
 end

@@ -3,6 +3,7 @@ require 'test_helper'
 class API::V1::UsersControllerTest < ActionController::TestCase
   setup do
     @user = users(:one)
+    @other_user = users(:two)
   end
 
   # GET /api/v1/users
@@ -110,7 +111,8 @@ class API::V1::UsersControllerTest < ActionController::TestCase
 
   # PATCH /api/v1/users
 
-  test 'PATCH /api/v1/users/:id with username' do
+  test 'PATCH /api/v1/users/:id with valid credentials' do
+    request.env['HTTP_AUTHORIZATION'] = @user.sessions.first.token
     patch :update, id: @user.id, data: {
       type: 'users',
       id: @user.id,
@@ -120,10 +122,26 @@ class API::V1::UsersControllerTest < ActionController::TestCase
     }
 
     @user.reload
-
     assert_equal 204, response.status
     assert_equal 'updated-username', @user.username
   end
+
+  test 'PATCH /api/v1/users/:id with invalid credentials' do
+    request.env['HTTP_AUTHORIZATION'] = @other_user.sessions.first.token
+    patch :update, id: @user.id, data: {
+      type: 'users',
+      id: @user.id,
+      attributes: {
+        username: 'updated-username'
+      }
+    }
+
+    @user.reload
+    assert_equal 403, response.status
+    assert_not_nil json['errors']
+    refute_equal 'updated-username', @user.username
+  end
+
 
 
 end
