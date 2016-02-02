@@ -1,25 +1,23 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  title: C Scale
-  artist: George P. Burdell
+  title: Title One
+  artist: Artist One
   s3_key: fixtures/c.mid
   user: one
 
 two:
-  title: Chromatic Scale
-  artist: Bach
-  s3_key: fixtures/chromatic.mid
+  title: Title Two 
+  artist: Artist Two
+  s3_key: fixtures/c.mid
   user: one
 
 three:
-  title: Ode to Joy
-  artist: Beethoven
-  s3_key: fixtures/ode.mid
+  title: Title Three
+  artist: Artist Three
+  s3_key: fixtures/c.mid
   user: one
 
 four: 
-  title: Pachelbel's Canon
-  artist: Johann Pachelbel
-  s3_key: fixtures/pachelbel.mid
+  title: Title Four
+  artist: Artist Four
+  s3_key: fixtures/c.mid
   user: two

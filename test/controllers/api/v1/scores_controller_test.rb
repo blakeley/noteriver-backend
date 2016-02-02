@@ -19,6 +19,27 @@ class API::V1::ScoresControllerTest < ActionController::TestCase
     assert_equal Score.count, json["data"].length
   end
 
+  test "GET /api/v1/scores, search param matches title" do
+    get :index, search: @score.title
+    assert_equal 200, response.status
+    refute_empty json["data"]
+    assert_equal 1, json["data"].length
+  end
+
+  test "GET /api/v1/scores, search param matches artist" do
+    get :index, search: @score.artist
+    assert_equal 200, response.status
+    refute_empty json["data"]
+    assert_equal 1, json["data"].length
+  end
+
+  test "GET /api/v1/scores, search param is case-insensitive" do
+    get :index, search: @score.title.upcase
+    assert_equal 200, response.status
+    refute_empty json["data"]
+    assert_equal 1, json["data"].length
+  end
+
   test "GET /api/v1/scores/:id" do
     get :show, id: @score.id
     assert_equal 200, response.status

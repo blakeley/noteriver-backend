@@ -10,7 +10,7 @@ class API::V1::ScoresController < API::V1::APIController
   end
 
   def index
-    respond_with Score.all
+    respond_with Score.search(params[:search])
   end
 
   private

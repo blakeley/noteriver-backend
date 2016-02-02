@@ -143,7 +143,7 @@ GEM
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
     slop (3.6.0)
-    spring (1.3.4)
+    spring (1.6.2)
     sprockets (3.0.1)
       rack (~> 1.0)
     sprockets-rails (2.2.4)
@@ -182,7 +182,7 @@ DEPENDENCIES
   redis
   responders
   sdoc (~> 0.4.0)
-  spring
+  spring (~> 1.6.2)
   unicorn
   web-console (~> 2.0)
 
